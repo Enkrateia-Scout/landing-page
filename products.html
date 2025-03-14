@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Enkrasia</title>
+    <title>Enkrasia Products</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
@@ -39,6 +39,13 @@
             margin: 0;
         }
         
+        h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #c0aa76;
+            margin: 20px 0;
+        }
+        
         .avatar-container {
             display: flex;
             justify-content: center;
@@ -66,6 +73,28 @@
             background: rgba(10, 25, 41, 0.5);
             border-radius: 10px;
             border: 1px solid #2a4a6a;
+        }
+        
+        .feature-list {
+            text-align: left;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .feature-list li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .coming-soon {
+            display: inline-block;
+            background-color: rgba(192, 170, 118, 0.2);
+            color: #c0aa76;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            border: 1px solid #c0aa76;
         }
         
         p {
@@ -138,6 +167,10 @@
                 font-size: 1.8rem;
             }
             
+            h2 {
+                font-size: 1.5rem;
+            }
+            
             .avatar-container {
                 margin: 20px 0;
                 padding: 15px;
@@ -160,11 +193,19 @@
             .nav-links {
                 gap: 15px;
             }
+            
+            .feature-list li {
+                font-size: 0.95rem;
+            }
         }
         
         @media (max-width: 480px) {
             h1 {
                 font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
             }
             
             header {
@@ -201,17 +242,36 @@
     </nav>
 
     <header>
-        <h1>About Enkrasia</h1>
+        <h1>Our Products</h1>
     </header>
 
     <section>
-        <p>Let me tell you about why we built Enkrasia...</p>
-        <p>Enkrasia is born from the ancient Greek concept of "self-mastery" or "self-control." In a world filled with distractions and competing values, we created this platform to help families align their digital experiences with their core values.</p>
-        <p>Our mission is to provide personalized content that strengthens family bonds, promotes meaningful conversations, and supports the values that matter most to you.</p>
-        <p>We believe that technology should serve your family's needs and values, not the other way around. By understanding what matters most to you, we can help create digital experiences that enrich rather than distract.</p>
+        <h2>Enkrasia Family App</h2>
+        <span class="coming-soon">Coming Soon</span>
+        <p>We're developing a comprehensive solution that empowers parents to create a safe, values-aligned digital environment for their children.</p>
+        
+        <ul class="feature-list">
+            <li><strong>Content Whitelisting:</strong> Parents can easily approve specific content that aligns with their family's core values, creating a safe browsing environment.</li>
+            <li><strong>Personalized Recommendations:</strong> Our intelligent system learns your family's preferences and values to suggest content that resonates with your unique identity.</li>
+            <li><strong>Value-Based Search:</strong> Find content filtered through the lens of your family's core values and priorities.</li>
+            <li><strong>Child-Friendly Interface:</strong> A beautiful, intuitive interface designed specifically for children to safely explore approved content.</li>
+            <li><strong>Family Discussion Prompts:</strong> Thoughtful conversation starters based on content to strengthen family bonds and encourage meaningful dialogue.</li>
+            <li><strong>Cross-Platform Access:</strong> Available on mobile devices, tablets, and web browsers for seamless family experience.</li>
+        </ul>
+        
+        <p>The Enkrasia Family App is designed to be more than just a content filter. It's a comprehensive tool that helps families navigate the digital world together, guided by their shared values and identity.</p>
     </section>
 
     <section>
+        <h2>Why Enkrasia is Different</h2>
+        <p>Unlike traditional content filters that simply block inappropriate material, Enkrasia takes a positive approach by helping you discover and curate content that actively reinforces your family's values.</p>
+        <p>Our technology doesn't just protect your children from harmful content—it helps them thrive by connecting them with digital experiences that inspire, educate, and align with your family's unique identity.</p>
+        <p>By understanding what matters most to your family, we can provide a truly personalized experience that grows and evolves alongside your children.</p>
+    </section>
+
+    <section>
+        <p>Interested in being among the first to try our app?</p>
+        <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSfQND3jMii9_9ID7HAq2MZ2Cf_OaO23fOa5pB_-77lphZ0Otw/viewform" target="_blank">Join the waitlist</a></p>
         <p><a href="index.html">Return Home</a></p>
     </section>
 </body>
