@@ -2,78 +2,73 @@
 
 This is the landing page for Enkrasia, a platform that helps families align their digital experiences with their core values.
 
-## Form Submission to Google Sheets
+## Form Submission to Supabase
 
-The signup form on this site submits data to a Google Spreadsheet. To set this up, follow these steps:
+The signup form on this site submits data to a Supabase database. To set this up, follow these steps:
 
-### Setting up Google Apps Script
+### Setting up Supabase
 
-1. Go to [Google Apps Script](https://script.google.com/) and create a new project.
+1. Create a Supabase account at [Supabase](https://supabase.com/) if you don't have one already.
 
-2. Copy the contents of the `google-apps-script.js` file in this repository and paste it into the script editor.
+2. Create a new project in Supabase and note down your project URL and API key (found in Project Settings > API).
 
-3. Make sure the `SPREADSHEET_ID` in the script matches your Google Spreadsheet ID. The current ID is set to: `1Uz4lMNzFpExwo_3yVkJ_GRWaRzAgysrnEYPpzS-GFpQ`.
+3. In your Supabase project, create a new table called `submissions` with the following columns:
+   - `id` (type: uuid, primary key)
+   - `email` (type: text)
+   - `religion` (type: text)
+   - `values` (type: text[])
+   - `content_to_avoid` (type: text[])
+   - `topics_to_avoid` (type: text[])
+   - `searches` (type: text[])
+   - `timestamp` (type: timestamp with time zone)
 
-4. If you want to use a different sheet name than "Scout Family Values Responses", update the `SHEET_NAME` constant.
+4. Create a `config.js` file in the root directory of your project with the following content:
 
-5. Deploy the script as a web app:
-   - Click on "Deploy" > "New deployment"
-   - Select "Web app" as the deployment type
-   - Set "Execute as" to "Me" (the account you're currently using)
-   - Set "Who has access" to "Anyone" (this allows the form to submit data without authentication)
-   - Click "Deploy"
-   - Copy the web app URL that is provided after deployment
+```javascript
+// Supabase configuration
+const SUPABASE_URL = 'https://your-project-url.supabase.co';
+const SUPABASE_API_KEY = 'your-supabase-api-key';
+```
 
-6. Update the `scriptURL` in the `signup.html` file with the URL you copied in the previous step.
+5. Replace `'https://your-project-url.supabase.co'` with your actual Supabase project URL and `'your-supabase-api-key'` with your actual Supabase API key.
 
-### Fixing Permission Issues
+6. Make sure to include the `config.js` file in your HTML files before any scripts that use the Supabase client:
 
-If you're experiencing issues with data not being written to the spreadsheet, follow these steps:
+```html
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+```
 
-1. **Check Permissions with the Test Function**:
-   - In the Google Apps Script editor, run the `checkPermissions()` function
-   - This will test if your script has permission to read and write to the spreadsheet
-   - Check the logs (View > Logs) for detailed information about any permission issues
+### Setting up Row-Level Security (Optional but Recommended)
 
-2. **Verify Spreadsheet Access**:
-   - Make sure you're logged into the same Google account that deployed the script
-   - Open the spreadsheet directly at: https://docs.google.com/spreadsheets/d/1Uz4lMNzFpExwo_3yVkJ_GRWaRzAgysrnEYPpzS-GFpQ
-   - Verify you can edit the spreadsheet manually
-   - If you can't access it, request edit access from the owner
+1. In your Supabase dashboard, go to the Authentication section and enable "Anonymous Key" if you want to allow unauthenticated submissions.
 
-3. **Redeploy the Script with Proper Permissions**:
-   - Go to the Google Apps Script editor
-   - Click on "Deploy" > "New deployment"
-   - Make sure "Execute as" is set to your account (the one with edit access to the spreadsheet)
-   - Set "Who has access" to "Anyone"
-   - Create a new deployment version
-   - Update the `scriptURL` in `signup.html` with the new deployment URL
+2. Go to the SQL Editor and run the following query to set up Row-Level Security (RLS) policies:
 
-4. **Run the Test Function**:
-   - In the Google Apps Script editor, run the `testAppendRow()` function
-   - Check the logs to see if the test data was successfully written to the sheet
-   - If successful, the form should now work correctly
+```sql
+-- Enable RLS on the submissions table
+ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
 
-5. **Check for Quota Limits**:
-   - Google Apps Script has daily quotas for various operations
-   - If you've made many requests, you might have hit a quota limit
-   - Wait 24 hours and try again
+-- Create a policy that allows anonymous inserts
+CREATE POLICY "Allow anonymous inserts" ON submissions
+FOR INSERT WITH CHECK (true);
 
-6. **Verify Sheet Name**:
-   - Make sure the sheet name in the script (`SHEET_NAME` constant) exactly matches the name of the sheet in your spreadsheet
-   - Sheet names are case-sensitive and space-sensitive
+-- If you want to restrict who can view the submissions, add a policy like this:
+CREATE POLICY "Only authenticated users can view submissions" ON submissions
+FOR SELECT USING (auth.role() = 'authenticated');
+```
 
 ### Testing the Form Submission
 
-1. You can test the Google Apps Script by running the `testAppendRow` function in the script editor.
+1. Open the signup page in your browser and fill out the form.
 
-2. To test the form submission from the website, fill out the form and submit it. Check the Google Spreadsheet to see if the data was added correctly.
+2. Submit the form and check your Supabase table to see if the data was added correctly.
 
 3. Check the browser console (F12 > Console) for any error messages during form submission.
 
 ## Updating the Website
 
-After setting up the Google Apps Script, make sure to update the `signup.html` file with the correct script URL and deploy the updated website.
+After setting up Supabase and creating the config.js file, make sure all HTML files that need to interact with Supabase include the necessary script tags.
 
 ## File Structure
 
@@ -81,14 +76,21 @@ After setting up the Google Apps Script, make sure to update the `signup.html` f
 - `about.html`: Information about Enkrasia
 - `products.html`: Information about Enkrasia's products
 - `signup.html`: The signup form
-- `google-apps-script.js`: The Google Apps Script code (not used directly on the website, but needs to be copied to Google Apps Script)
+- `config.js`: Configuration file with Supabase credentials
 - `README.md`: This file
 
 ## Development
 
-This project is using a Git branch called `sign-up_flow` for the signup form development. To merge these changes back to the main branch, use:
+To work on this project locally:
 
-```bash
-git checkout main
-git merge sign-up_flow
-```
+1. Clone the repository
+2. Create a `config.js` file with your Supabase credentials as described above
+3. Open the HTML files in your browser to test
+
+## Security Note
+
+The `config.js` file contains sensitive API keys. Make sure to:
+
+1. Add `config.js` to your `.gitignore` file to prevent it from being committed to your repository
+2. Use environment variables in production environments
+3. Consider implementing proper authentication for production use

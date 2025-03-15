@@ -119,6 +119,40 @@
             margin: 20px 0;
         }
         
+        .process-steps {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .process-steps h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #c0aa76;
+        }
+        
+        .step {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 3px solid #2a4a6a;
+            position: relative;
+        }
+        
+        .step:before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #c0aa76;
+            border-radius: 50%;
+        }
+        
+        .step h3 {
+            margin-top: 0;
+            color: #c0aa76;
+        }
+        
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             h1 {
@@ -146,6 +180,12 @@
             
             .success-icon {
                 font-size: 4rem;
+            }
+            
+            .step:before {
+                width: 15px;
+                height: 15px;
+                left: -9px;
             }
         }
         
@@ -187,14 +227,48 @@
     </nav>
 
     <header>
-        <h1>Success!</h1>
+        <h1>Thank You for Joining Enkrasia!</h1>
     </header>
 
     <section>
         <div class="success-icon">✓</div>
-        <p>Thank you for sharing your family values!</p>
-        <p>We will use this information to provide personalized content recommendations that align with what matters most to you.</p>
-        <p><a href="index.html">Return Home</a></p>
+        <p>Your family values profile has been successfully created!</p>
+        
+        <div class="process-steps">
+            <h2>What Happens Next?</h2>
+            
+            <div class="step">
+                <h3>Value Profile Analysis</h3>
+                <p>Our team will carefully review your family values profile, including your preferences for content types, topics to avoid, and specific interests you've shared.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Content Discovery</h3>
+                <p>Based on your profile, our content specialists will search for high-quality videos and resources that perfectly align with your family values and educational goals.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Manual Content Review</h3>
+                <p>Each piece of content is manually reviewed to ensure it meets our standards and aligns with your specific family values, providing an extra layer of safety and relevance.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Personalized Recommendations</h3>
+                <p>Within the next 24 hours, you'll receive an email with a carefully curated list of content recommendations tailored specifically to your family's values and interests.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Ongoing Support</h3>
+                <p>As you review and approve content, we'll continue to refine our understanding of your preferences to provide even better recommendations in the future.</p>
+            </div>
+        </div>
+        
+        <p>We're committed to helping you discover content that not only keeps your children safe but also nurtures their growth and development in alignment with your family values.</p>
+        
+        <p>
+            <a href="about.html#products" style="margin-right: 15px;">View Our Products</a>
+            <a href="index.html">Return Home</a>
+        </p>
     </section>
 </body>
 </html> 

@@ -217,6 +217,21 @@
             max-width: 100%;
         }
         
+        /* Product Image Styles */
+        .product-image-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 170, 118, 0.3);
+        }
+        
         /* Navigation Styles */
         nav {
             width: 100%;
@@ -455,7 +470,7 @@
         </div>
     </section>
 
-    <section>
+    <section id="products">
         <h2 class="section-title collapsible">Our Products</h2>
         <div class="content">
             <p>Unlike traditional content filters that simply block inappropriate material, Enkrasia takes a positive approach by helping you discover and curate content that actively reinforces your family's values.</p>
@@ -469,6 +484,9 @@
             
             <div class="parent-content" id="fortressContent">
                 <h2>Enkrasia Fortress</h2>
+                <div class="product-image-container">
+                    <img src="assets/fortress.png" alt="Enkrasia Fortress" class="product-image">
+                </div>
                 <p>A household internet traffic filtering service that creates a safe, controlled online environment for children. By enforcing a strict whitelist policy, it ensures only pre-approved resources are accessible, while blocking everything else.</p>
                 
                 <p><strong>Key Features:</strong></p>
@@ -496,6 +514,9 @@
             
             <div class="parent-content" id="scoutContent">
                 <h2>Enkrasia Scout</h2>
+                <div class="product-image-container">
+                    <img src="assets/scout.png" alt="Enkrasia Scout" class="product-image">
+                </div>
                 <p>A trusted content discovery system that enables parents to easily search for and approve content that aligns with their family values before adding it to their children's whitelisted browsing environment.</p>
                 
                 <p><strong>The Problem:</strong> Parents who restrict their children's internet access face significant challenges:</p>
@@ -521,6 +542,9 @@
             
             <div class="parent-content" id="wizardContent">
                 <h2>Enkrasia Wizard</h2>
+                <div class="product-image-container">
+                    <img src="assets/wizard.png" alt="Enkrasia Wizard" class="product-image">
+                </div>
                 <p>A Chat AI system designed to align children's education and exploration with their family's values. It exclusively generates responses and recommendations from pre-approved, whitelisted resources, ensuring a safe, trustworthy, and focused learning environment.</p>
                 
                 <p><strong>Key Features:</strong></p>
@@ -565,6 +589,48 @@
                 content.classList.toggle('show');
             });
         });
+        
+        // Handle anchor links
+        if (window.location.hash) {
+            const targetSection = document.querySelector(window.location.hash);
+            if (targetSection) {
+                // Scroll to the section with a slight delay to ensure proper positioning
+                setTimeout(() => {
+                    // Get the header height to offset the scroll position
+                    const headerHeight = document.querySelector('nav').offsetHeight;
+                    
+                    // Calculate the element's position relative to the viewport
+                    const elementPosition = targetSection.getBoundingClientRect().top;
+                    
+                    // Calculate the position to scroll to (element position + current scroll - header height)
+                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+                    
+                    // Scroll to the element with the offset
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+                
+                // Expand the section if it's collapsible
+                const collapsible = targetSection.querySelector('.collapsible');
+                if (collapsible) {
+                    collapsible.classList.add('active');
+                    const content = targetSection.querySelector('.content');
+                    if (content) {
+                        content.classList.add('show');
+                    }
+                }
+                
+                // If it's the products section, show the default product (Fortress)
+                if (targetSection.id === 'products') {
+                    const fortressButton = document.getElementById('fortressButton');
+                    if (fortressButton) {
+                        fortressButton.click();
+                    }
+                }
+            }
+        }
         
         // Parent role buttons functionality
         const motherButton = document.getElementById('motherButton');
