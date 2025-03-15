@@ -524,39 +524,30 @@
             // Create timestamp
             const timestamp = new Date().toISOString();
             
-            // Prepare data for Google Sheets
-            const data = {
-                timestamp: timestamp,
-                email: email,
-                religion: religion,
-                encourage: valuesToEncourage,
-                contentToAvoid: contentToAvoid,
-                topicsToAvoid: topicsToAvoid,
-                searches: searchQueries
-            };
-            
-            // Show loading state
-            const submitButton = document.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            submitButton.textContent = 'Submitting...';
-            submitButton.disabled = true;
-            
             // Send data to Google Sheets
             // Note: You'll need to replace this URL with the actual deployed Google Apps Script Web App URL
-            const scriptURL = 'https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwav3yV50WJdXDuzxCfQYGoTZKEaoJ5I99Ql24s_KaPLI5dxpLA0Hdeysen9a5LsxxCAw/exec';
             
+            // Create a form data object instead of JSON
+            const formData = new FormData();
+            formData.append('timestamp', timestamp);
+            formData.append('email', email);
+            formData.append('religion', religion);
+            formData.append('encourage', valuesToEncourage);
+            formData.append('contentToAvoid', contentToAvoid);
+            formData.append('topicsToAvoid', topicsToAvoid);
+            formData.append('searches', searchQueries);
+            
+            // Use no-cors mode with form data
             fetch(scriptURL, {
                 method: 'POST',
                 mode: 'no-cors',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                redirect: 'follow',
-                body: JSON.stringify(data)
+                body: formData
             })
-            .then(response => {
-                console.log('Success!', response);
+            .then(() => {
+                // Since we're using no-cors, we can't actually read the response
+                // So we just assume success if no error is thrown
+                console.log('Form submitted successfully');
                 alert('Thank you for sharing your family values! We will use this information to provide personalized content recommendations.');
                 
                 // Reset form

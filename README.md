@@ -26,6 +26,18 @@ The signup form on this site submits data to a Google Spreadsheet. To set this u
 
 6. Update the `scriptURL` in the `signup.html` file with the URL you copied in the previous step.
 
+7. **Important**: Make sure you have permission to access the spreadsheet:
+   - Open the Google Spreadsheet with the ID specified in the script
+   - If you don't have access, create a new spreadsheet and update the `SPREADSHEET_ID` in the script
+   - Make sure the Google account you're using to deploy the script has edit access to the spreadsheet
+
+8. **Troubleshooting Authorization Issues**:
+   - If you encounter a 401 (Unauthorized) error, try the following:
+     - Make sure you're logged in to the same Google account that deployed the script
+     - Try redeploying the script with a new version number
+     - Check that the spreadsheet permissions allow the script to edit it
+     - If using the script in a different domain, make sure to add appropriate CORS headers in the script
+
 ### Testing the Form Submission
 
 1. You can test the Google Apps Script by running the `testAppendRow` function in the script editor.

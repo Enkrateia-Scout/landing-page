@@ -11,8 +11,8 @@ function doGet(e) {
 
 function doPost(e) {
   try {
-    // Parse the JSON data from the request
-    const data = JSON.parse(e.postData.contents);
+    // Get the form data from the request parameters
+    const data = e.parameter;
     
     // Open the spreadsheet and get the sheet
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -34,13 +34,13 @@ function doPost(e) {
     
     // Append the data to the sheet
     sheet.appendRow([
-      data.timestamp,
-      data.email,
-      data.religion,
-      data.encourage,
-      data.contentToAvoid,
-      data.topicsToAvoid,
-      data.searches
+      data.timestamp || new Date().toISOString(),
+      data.email || '',
+      data.religion || '',
+      data.encourage || '',
+      data.contentToAvoid || '',
+      data.topicsToAvoid || '',
+      data.searches || ''
     ]);
     
     // Return success response
@@ -50,7 +50,7 @@ function doPost(e) {
       
   } catch (error) {
     // Log the error
-    console.error(error);
+    Logger.log(error);
     
     // Return error response
     return ContentService
@@ -62,23 +62,18 @@ function doPost(e) {
 // This function can be used to test the script
 function testAppendRow() {
   const testData = {
-    timestamp: new Date().toISOString(),
-    email: 'test@example.com',
-    religion: 'Christianity',
-    encourage: 'honesty,respect,kindness',
-    contentToAvoid: 'violence,profanity',
-    topicsToAvoid: 'politics,war',
-    searches: 'Christian kids songs, Science experiments for children'
-  };
-  
-  // Simulate a POST request
-  const e = {
-    postData: {
-      contents: JSON.stringify(testData)
+    parameter: {
+      timestamp: new Date().toISOString(),
+      email: 'test@example.com',
+      religion: 'Christianity',
+      encourage: 'honesty,respect,kindness',
+      contentToAvoid: 'violence,profanity',
+      topicsToAvoid: 'politics,war',
+      searches: 'Christian kids songs, Science experiments for children'
     }
   };
   
   // Call doPost with the test data
-  const result = doPost(e);
+  const result = doPost(testData);
   Logger.log(result.getContent());
 } 
