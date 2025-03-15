@@ -232,6 +232,20 @@
             color: #7FFF8E;
         }
         
+        /* Red style for avoid content buttons when active */
+        #avoidContentToggleGroup .toggle-btn.active {
+            background-color: rgba(220, 53, 69, 0.3);
+            border-color: #DC3545;
+            color: #FF7B7B;
+        }
+        
+        /* Red style for avoid topics buttons when active */
+        #avoidTopicsToggleGroup .toggle-btn.active {
+            background-color: rgba(220, 53, 69, 0.3);
+            border-color: #DC3545;
+            color: #FF7B7B;
+        }
+        
         .toggle-btn:hover {
             border-color: #c0aa76;
         }
@@ -239,6 +253,16 @@
         /* Hover style for values buttons */
         #valuesToggleGroup .toggle-btn:hover:not(.active) {
             border-color: #4CAF50;
+        }
+        
+        /* Hover style for avoid content buttons */
+        #avoidContentToggleGroup .toggle-btn:hover:not(.active) {
+            border-color: #DC3545;
+        }
+        
+        /* Hover style for avoid topics buttons */
+        #avoidTopicsToggleGroup .toggle-btn:hover:not(.active) {
+            border-color: #DC3545;
         }
         
         button {
