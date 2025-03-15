@@ -14,7 +14,7 @@ The signup form on this site submits data to a Google Spreadsheet. To set this u
 
 3. Make sure the `SPREADSHEET_ID` in the script matches your Google Spreadsheet ID. The current ID is set to: `1Uz4lMNzFpExwo_3yVkJ_GRWaRzAgysrnEYPpzS-GFpQ`.
 
-4. If you want to use a different sheet name than "Form Responses", update the `SHEET_NAME` constant.
+4. If you want to use a different sheet name than "Scout Family Values Responses", update the `SHEET_NAME` constant.
 
 5. Deploy the script as a web app:
    - Click on "Deploy" > "New deployment"
@@ -26,23 +26,50 @@ The signup form on this site submits data to a Google Spreadsheet. To set this u
 
 6. Update the `scriptURL` in the `signup.html` file with the URL you copied in the previous step.
 
-7. **Important**: Make sure you have permission to access the spreadsheet:
-   - Open the Google Spreadsheet with the ID specified in the script
-   - If you don't have access, create a new spreadsheet and update the `SPREADSHEET_ID` in the script
-   - Make sure the Google account you're using to deploy the script has edit access to the spreadsheet
+### Fixing Permission Issues
 
-8. **Troubleshooting Authorization Issues**:
-   - If you encounter a 401 (Unauthorized) error, try the following:
-     - Make sure you're logged in to the same Google account that deployed the script
-     - Try redeploying the script with a new version number
-     - Check that the spreadsheet permissions allow the script to edit it
-     - If using the script in a different domain, make sure to add appropriate CORS headers in the script
+If you're experiencing issues with data not being written to the spreadsheet, follow these steps:
+
+1. **Check Permissions with the Test Function**:
+   - In the Google Apps Script editor, run the `checkPermissions()` function
+   - This will test if your script has permission to read and write to the spreadsheet
+   - Check the logs (View > Logs) for detailed information about any permission issues
+
+2. **Verify Spreadsheet Access**:
+   - Make sure you're logged into the same Google account that deployed the script
+   - Open the spreadsheet directly at: https://docs.google.com/spreadsheets/d/1Uz4lMNzFpExwo_3yVkJ_GRWaRzAgysrnEYPpzS-GFpQ
+   - Verify you can edit the spreadsheet manually
+   - If you can't access it, request edit access from the owner
+
+3. **Redeploy the Script with Proper Permissions**:
+   - Go to the Google Apps Script editor
+   - Click on "Deploy" > "New deployment"
+   - Make sure "Execute as" is set to your account (the one with edit access to the spreadsheet)
+   - Set "Who has access" to "Anyone"
+   - Create a new deployment version
+   - Update the `scriptURL` in `signup.html` with the new deployment URL
+
+4. **Run the Test Function**:
+   - In the Google Apps Script editor, run the `testAppendRow()` function
+   - Check the logs to see if the test data was successfully written to the sheet
+   - If successful, the form should now work correctly
+
+5. **Check for Quota Limits**:
+   - Google Apps Script has daily quotas for various operations
+   - If you've made many requests, you might have hit a quota limit
+   - Wait 24 hours and try again
+
+6. **Verify Sheet Name**:
+   - Make sure the sheet name in the script (`SHEET_NAME` constant) exactly matches the name of the sheet in your spreadsheet
+   - Sheet names are case-sensitive and space-sensitive
 
 ### Testing the Form Submission
 
 1. You can test the Google Apps Script by running the `testAppendRow` function in the script editor.
 
 2. To test the form submission from the website, fill out the form and submit it. Check the Google Spreadsheet to see if the data was added correctly.
+
+3. Check the browser console (F12 > Console) for any error messages during form submission.
 
 ## Updating the Website
 

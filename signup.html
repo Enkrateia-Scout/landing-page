@@ -470,7 +470,18 @@
         <p><a href="index.html">Return Home</a></p>
     </section>
 
+    <!-- Load configuration with API keys -->
+    <script src="config.js"></script>
+    
+    <!-- Load Supabase JS from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://hrdcefbqiujkaisuiqkc.supabase.co';
+        const supabaseKey = SUPABASE_API_KEY; // Use the key from config.js
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        
         // Toggle button functionality
         document.querySelectorAll('.toggle-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -491,6 +502,7 @@
             updateSelectedValues('avoidTopicsToggleGroup', 'selectedAvoidTopics');
         }
         
+        // Initialize form submission handler
         document.getElementById('familyValuesForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
@@ -516,65 +528,76 @@
             // Get form data
             const email = document.getElementById('email').value;
             const religion = document.getElementById('religion').value;
-            const valuesToEncourage = document.getElementById('selectedValues').value;
-            const contentToAvoid = document.getElementById('selectedAvoidContent').value;
-            const topicsToAvoid = document.getElementById('selectedAvoidTopics').value;
+            const values = document.getElementById('selectedValues').value;
+            const avoid_content = document.getElementById('selectedAvoidContent').value;
+            const avoid_topics = document.getElementById('selectedAvoidTopics').value;
             const searchQueries = document.getElementById('searchQueries').value;
             
             // Create timestamp
             const timestamp = new Date().toISOString();
             
-            // Send data to Google Sheets
-            // Note: You'll need to replace this URL with the actual deployed Google Apps Script Web App URL
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwav3yV50WJdXDuzxCfQYGoTZKEaoJ5I99Ql24s_KaPLI5dxpLA0Hdeysen9a5LsxxCAw/exec';
+            // Get the submit button
+            const submitButton = event.submitter || document.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
             
-            // Create a form data object instead of JSON
-            const formData = new FormData();
-            formData.append('timestamp', timestamp);
-            formData.append('email', email);
-            formData.append('religion', religion);
-            formData.append('encourage', valuesToEncourage);
-            formData.append('contentToAvoid', contentToAvoid);
-            formData.append('topicsToAvoid', topicsToAvoid);
-            formData.append('searches', searchQueries);
+            // Disable the button and change text to show loading
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
             
-            // Use no-cors mode with form data
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: formData
-            })
-            .then(() => {
-                // Since we're using no-cors, we can't actually read the response
-                // So we just assume success if no error is thrown
-                console.log('Form submitted successfully');
-                alert('Thank you for sharing your family values! We will use this information to provide personalized content recommendations.');
-                
-                // Reset form
-                document.getElementById('familyValuesForm').reset();
-                
-                // Reset toggle buttons
-                document.querySelectorAll('.toggle-btn.active').forEach(btn => {
-                    btn.classList.remove('active');
+            // Convert comma-separated values to arrays
+            const valuesArray = values.split(',').filter(Boolean);
+            const avoidContentArray = avoid_content.split(',').filter(Boolean);
+            const avoidTopicsArray = avoid_topics.split(',').filter(Boolean);
+            
+            // Create data object for Supabase using the correct field names from the database schema
+            const supabaseData = {
+                email: email,
+                religion: religion,
+                encourage: valuesArray,
+                content_to_avoid: avoidContentArray,
+                topics_to_avoid: avoidTopicsArray,
+                searches: searchQueries,
+                timestamp: timestamp
+            };
+            
+            // Log the data being sent (for debugging)
+            console.log('Submitting to Supabase:', supabaseData);
+            
+            // Send data to Supabase
+            supabaseClient
+                .from('submissions')
+                .insert([supabaseData])
+                .then(response => {
+                    if (response.error) {
+                        console.error('Supabase error:', response.error);
+                        throw new Error(response.error.message);
+                    }
+                    
+                    console.log('Form submitted successfully:', response.data);
+                    alert('Thank you for sharing your family values! We will use this information to provide personalized content recommendations.');
+                    
+                    // Reset form
+                    document.getElementById('familyValuesForm').reset();
+                    
+                    // Reset toggle buttons
+                    document.querySelectorAll('.toggle-btn.active').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Reset hidden inputs
+                    document.getElementById('selectedValues').value = '';
+                    document.getElementById('selectedAvoidContent').value = '';
+                    document.getElementById('selectedAvoidTopics').value = '';
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('There was an error submitting your form. Please try again later.');
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
                 });
-                
-                // Reset hidden inputs
-                document.getElementById('selectedValues').value = '';
-                document.getElementById('selectedAvoidContent').value = '';
-                document.getElementById('selectedAvoidTopics').value = '';
-                
-                // Optionally redirect to a thank you page
-                // window.location.href = 'thank-you.html';
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert('There was an error submitting your form. Please try again later.');
-            })
-            .finally(() => {
-                // Reset button state
-                submitButton.textContent = originalButtonText;
-                submitButton.disabled = false;
-            });
         });
     </script>
 </body>
