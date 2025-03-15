@@ -513,12 +513,77 @@
                 return;
             }
             
-            // In a real implementation, you would send this data to your server
-            // For now, we'll just show a confirmation message
-            alert('Thank you for sharing your family values! We will use this information to provide personalized content recommendations.');
+            // Get form data
+            const email = document.getElementById('email').value;
+            const religion = document.getElementById('religion').value;
+            const valuesToEncourage = document.getElementById('selectedValues').value;
+            const contentToAvoid = document.getElementById('selectedAvoidContent').value;
+            const topicsToAvoid = document.getElementById('selectedAvoidTopics').value;
+            const searchQueries = document.getElementById('searchQueries').value;
             
-            // Optionally redirect to a thank you page
-            // window.location.href = 'thank-you.html';
+            // Create timestamp
+            const timestamp = new Date().toISOString();
+            
+            // Prepare data for Google Sheets
+            const data = {
+                timestamp: timestamp,
+                email: email,
+                religion: religion,
+                encourage: valuesToEncourage,
+                contentToAvoid: contentToAvoid,
+                topicsToAvoid: topicsToAvoid,
+                searches: searchQueries
+            };
+            
+            // Show loading state
+            const submitButton = document.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Submitting...';
+            submitButton.disabled = true;
+            
+            // Send data to Google Sheets
+            // Note: You'll need to replace this URL with the actual deployed Google Apps Script Web App URL
+            const scriptURL = 'https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                redirect: 'follow',
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                console.log('Success!', response);
+                alert('Thank you for sharing your family values! We will use this information to provide personalized content recommendations.');
+                
+                // Reset form
+                document.getElementById('familyValuesForm').reset();
+                
+                // Reset toggle buttons
+                document.querySelectorAll('.toggle-btn.active').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Reset hidden inputs
+                document.getElementById('selectedValues').value = '';
+                document.getElementById('selectedAvoidContent').value = '';
+                document.getElementById('selectedAvoidTopics').value = '';
+                
+                // Optionally redirect to a thank you page
+                // window.location.href = 'thank-you.html';
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('There was an error submitting your form. Please try again later.');
+            })
+            .finally(() => {
+                // Reset button state
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+            });
         });
     </script>
 </body>
