@@ -392,78 +392,32 @@
                 
                 <div class="form-group">
                     <label>What types of content do you not want your child seeing? <span class="required">*</span><br><span class="form-note">(Select all that apply)</span></label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="violence" name="avoid_content" value="violence">
-                            <label for="violence">Violence</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="profanity" name="avoid_content" value="profanity">
-                            <label for="profanity">Profanity</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="sexual_content" name="avoid_content" value="sexual_content">
-                            <label for="sexual_content">Sexual Content</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="drug_use" name="avoid_content" value="drug_use">
-                            <label for="drug_use">Drug Use</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="alcohol" name="avoid_content" value="alcohol">
-                            <label for="alcohol">Alcohol</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="smoking" name="avoid_content" value="smoking">
-                            <label for="smoking">Smoking</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="frightening" name="avoid_content" value="frightening">
-                            <label for="frightening">Frightening Content</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="gambling" name="avoid_content" value="gambling">
-                            <label for="gambling">Gambling</label>
-                        </div>
+                    <div class="toggle-group" id="avoidContentToggleGroup">
+                        <button type="button" class="toggle-btn" data-value="alcohol">Alcohol</button>
+                        <button type="button" class="toggle-btn" data-value="drug_use">Drug Use</button>
+                        <button type="button" class="toggle-btn" data-value="frightening">Frightening Content</button>
+                        <button type="button" class="toggle-btn" data-value="gambling">Gambling</button>
+                        <button type="button" class="toggle-btn" data-value="profanity">Profanity</button>
+                        <button type="button" class="toggle-btn" data-value="sexual_content">Sexual Content</button>
+                        <button type="button" class="toggle-btn" data-value="smoking">Smoking</button>
+                        <button type="button" class="toggle-btn" data-value="violence">Violence</button>
                     </div>
+                    <input type="hidden" id="selectedAvoidContent" name="avoid_content">
                 </div>
                 
                 <div class="form-group">
                     <label>What topics do you want to keep your child away from? <span class="required">*</span><br><span class="form-note">(Select all that apply)</span></label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="politics" name="avoid_topics" value="politics">
-                            <label for="politics">Politics</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="war" name="avoid_topics" value="war">
-                            <label for="war">War</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="death" name="avoid_topics" value="death">
-                            <label for="death">Death</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="crime" name="avoid_topics" value="crime">
-                            <label for="crime">Crime</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="money" name="avoid_topics" value="money">
-                            <label for="money">Money/Materialism</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="dating" name="avoid_topics" value="dating">
-                            <label for="dating">Dating/Relationships</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="certain_religions" name="avoid_topics" value="certain_religions">
-                            <label for="certain_religions">Certain Religions</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="evolution" name="avoid_topics" value="evolution">
-                            <label for="evolution">Evolution</label>
-                        </div>
+                    <div class="toggle-group" id="avoidTopicsToggleGroup">
+                        <button type="button" class="toggle-btn" data-value="certain_religions">Certain Religions</button>
+                        <button type="button" class="toggle-btn" data-value="crime">Crime</button>
+                        <button type="button" class="toggle-btn" data-value="dating">Dating/Relationships</button>
+                        <button type="button" class="toggle-btn" data-value="death">Death</button>
+                        <button type="button" class="toggle-btn" data-value="evolution">Evolution</button>
+                        <button type="button" class="toggle-btn" data-value="money">Money/Materialism</button>
+                        <button type="button" class="toggle-btn" data-value="politics">Politics</button>
+                        <button type="button" class="toggle-btn" data-value="war">War</button>
                     </div>
+                    <input type="hidden" id="selectedAvoidTopics" name="avoid_topics">
                 </div>
                 
                 <div class="form-group">
@@ -485,25 +439,41 @@
         document.querySelectorAll('.toggle-btn').forEach(button => {
             button.addEventListener('click', function() {
                 this.classList.toggle('active');
-                updateSelectedValues();
+                updateAllSelectedValues();
             });
         });
         
-        function updateSelectedValues() {
-            const selectedButtons = document.querySelectorAll('#valuesToggleGroup .toggle-btn.active');
+        function updateSelectedValues(groupId, hiddenInputId) {
+            const selectedButtons = document.querySelectorAll(`#${groupId} .toggle-btn.active`);
             const selectedValues = Array.from(selectedButtons).map(btn => btn.dataset.value);
-            document.getElementById('selectedValues').value = selectedValues.join(',');
+            document.getElementById(hiddenInputId).value = selectedValues.join(',');
+        }
+        
+        function updateAllSelectedValues() {
+            updateSelectedValues('valuesToggleGroup', 'selectedValues');
+            updateSelectedValues('avoidContentToggleGroup', 'selectedAvoidContent');
+            updateSelectedValues('avoidTopicsToggleGroup', 'selectedAvoidTopics');
         }
         
         document.getElementById('familyValuesForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Update selected values before submission
-            updateSelectedValues();
+            // Update all selected values before submission
+            updateAllSelectedValues();
             
-            // Validate that at least one value is selected
+            // Validate that at least one value is selected in each required group
             if (document.getElementById('selectedValues').value === '') {
                 alert('Please select at least one value to encourage in your children.');
+                return;
+            }
+            
+            if (document.getElementById('selectedAvoidContent').value === '') {
+                alert('Please select at least one type of content you do not want your child seeing.');
+                return;
+            }
+            
+            if (document.getElementById('selectedAvoidTopics').value === '') {
+                alert('Please select at least one topic you want to keep your child away from.');
                 return;
             }
             
