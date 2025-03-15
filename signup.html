@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Enkrasia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cinzel', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(135deg, #0a1929 0%, #000000 100%);
+            color: #ffffff;
+        }
+        
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            border-bottom: 1px solid #2a4a6a;
+        }
+        
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(100, 149, 237, 0.5);
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        
+        h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #c0aa76;
+            margin: 20px 0;
+        }
+        
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(10, 25, 41, 0.7);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+        }
+        
+        .avatar-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        
+        section {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(10, 25, 41, 0.5);
+            border-radius: 10px;
+            border: 1px solid #2a4a6a;
+        }
+        
+        p {
+            line-height: 1.8;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        a {
+            color: #c0aa76;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 1px solid #c0aa76;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        a:hover {
+            background-color: #c0aa76;
+            color: #0a1929;
+            text-shadow: none;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            width: 100%;
+            padding: 20px;
+            background: rgba(10, 25, 41, 0.8);
+            border-bottom: 1px solid #2a4a6a;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            border: none;
+            padding: 5px 10px;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #c0aa76;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            background-color: transparent;
+            color: #c0aa76;
+        }
+        
+        /* Form Styles */
+        .form-container {
+            width: 100%;
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: #c0aa76;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(10, 25, 41, 0.7);
+            border: 1px solid #2a4a6a;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #c0aa76;
+            box-shadow: 0 0 5px rgba(192, 170, 118, 0.5);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            margin-top: 15px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .checkbox-container label {
+            margin-bottom: 0;
+            display: inline;
+        }
+        
+        /* Toggle Button Styles */
+        .toggle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .toggle-btn {
+            background-color: rgba(10, 25, 41, 0.7);
+            color: #ffffff;
+            border: 1px solid #2a4a6a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn.active {
+            background-color: rgba(192, 170, 118, 0.3);
+            border-color: #c0aa76;
+            color: #c0aa76;
+        }
+        
+        /* Green style for values buttons when active */
+        #valuesToggleGroup .toggle-btn.active {
+            background-color: rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+            color: #7FFF8E;
+        }
+        
+        /* Red style for avoid content buttons when active */
+        #avoidContentToggleGroup .toggle-btn.active {
+            background-color: rgba(220, 53, 69, 0.3);
+            border-color: #DC3545;
+            color: #FF7B7B;
+        }
+        
+        /* Red style for avoid topics buttons when active */
+        #avoidTopicsToggleGroup .toggle-btn.active {
+            background-color: rgba(220, 53, 69, 0.3);
+            border-color: #DC3545;
+            color: #FF7B7B;
+        }
+        
+        .toggle-btn:hover {
+            border-color: #c0aa76;
+        }
+        
+        /* Hover style for values buttons */
+        #valuesToggleGroup .toggle-btn:hover:not(.active) {
+            border-color: #4CAF50;
+        }
+        
+        /* Hover style for avoid content buttons */
+        #avoidContentToggleGroup .toggle-btn:hover:not(.active) {
+            border-color: #DC3545;
+        }
+        
+        /* Hover style for avoid topics buttons */
+        #avoidTopicsToggleGroup .toggle-btn:hover:not(.active) {
+            border-color: #DC3545;
+        }
+        
+        button {
+            background-color: transparent;
+            color: #c0aa76;
+            border: 1px solid #c0aa76;
+            padding: 12px 25px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #c0aa76;
+            color: #0a1929;
+        }
+        
+        .required {
+            color: #c0aa76;
+        }
+        
+        .form-note {
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            section {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            a, button {
+                padding: 8px 16px;
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            label {
+                font-size: 1rem;
+            }
+            
+            input, textarea, select {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            header {
+                padding: 20px 10px;
+            }
+            
+            section {
+                padding: 12px;
+                width: 95%;
+            }
+            
+            p {
+                margin-bottom: 15px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Sign Up for Personalized Content</h1>
+    </header>
+
+    <section>
+        <p>Tell us about your family's values and preferences so we can provide content that aligns with what matters most to you.</p>
+        
+        <div class="form-container">
+            <form id="familyValuesForm" action="#" method="POST">
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="religion">What religion do you most closely align with? <span class="required">*</span></label>
+                    <select id="religion" name="religion" required>
+                        <option value="" disabled selected>Select your religion</option>
+                        <option value="christianity">Christianity</option>
+                        <option value="islam">Islam</option>
+                        <option value="judaism">Judaism</option>
+                        <option value="hinduism">Hinduism</option>
+                        <option value="buddhism">Buddhism</option>
+                        <option value="sikhism">Sikhism</option>
+                        <option value="atheism">Atheism</option>
+                        <option value="agnosticism">Agnosticism</option>
+                        <option value="spiritual">Spiritual but not religious</option>
+                        <option value="other">Other</option>
+                        <option value="prefer_not_to_say">Prefer not to say</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>What values would you like to encourage in your children? <span class="required">*</span><br><span class="form-note">(Choose all that apply)</span></label>
+                    <div class="toggle-group" id="valuesToggleGroup">
+                        <button type="button" class="toggle-btn" data-value="courage">Courage</button>
+                        <button type="button" class="toggle-btn" data-value="creativity">Creativity</button>
+                        <button type="button" class="toggle-btn" data-value="curiosity">Curiosity</button>
+                        <button type="button" class="toggle-btn" data-value="empathy">Empathy</button>
+                        <button type="button" class="toggle-btn" data-value="faith">Faith</button>
+                        <button type="button" class="toggle-btn" data-value="family">Family</button>
+                        <button type="button" class="toggle-btn" data-value="gratitude">Gratitude</button>
+                        <button type="button" class="toggle-btn" data-value="honesty">Honesty</button>
+                        <button type="button" class="toggle-btn" data-value="kindness">Kindness</button>
+                        <button type="button" class="toggle-btn" data-value="perseverance">Perseverance</button>
+                        <button type="button" class="toggle-btn" data-value="respect">Respect</button>
+                        <button type="button" class="toggle-btn" data-value="responsibility">Responsibility</button>
+                    </div>
+                    
+                    <!-- Custom value input -->
+                    <div class="custom-value-container" style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="customValueInput" placeholder="Enter your own value..." style="flex: 1;">
+                        <button type="button" id="addCustomValueBtn" style="margin-top: 0;">Add Value</button>
+                    </div>
+                    
+                    <input type="hidden" id="selectedValues" name="values">
+                </div>
+                
+                <div class="form-group">
+                    <label>What types of content do you not want your child seeing? <span class="required">*</span><br><span class="form-note">(Select all that apply)</span></label>
+                    <div class="toggle-group" id="avoidContentToggleGroup">
+                        <button type="button" class="toggle-btn" data-value="alcohol">Alcohol</button>
+                        <button type="button" class="toggle-btn" data-value="drug_use">Drug Use</button>
+                        <button type="button" class="toggle-btn" data-value="frightening">Frightening Content</button>
+                        <button type="button" class="toggle-btn" data-value="gambling">Gambling</button>
+                        <button type="button" class="toggle-btn" data-value="profanity">Profanity</button>
+                        <button type="button" class="toggle-btn" data-value="sexual_content">Sexual Content</button>
+                        <button type="button" class="toggle-btn" data-value="smoking">Smoking</button>
+                        <button type="button" class="toggle-btn" data-value="violence">Violence</button>
+                    </div>
+                    
+                    <!-- Custom content to avoid input -->
+                    <div class="custom-value-container" style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="customAvoidContentInput" placeholder="Enter content to avoid..." style="flex: 1;">
+                        <button type="button" id="addCustomAvoidContentBtn" style="margin-top: 0;">Add Content</button>
+                    </div>
+                    
+                    <input type="hidden" id="selectedAvoidContent" name="avoid_content">
+                </div>
+                
+                <div class="form-group">
+                    <label>What topics do you want to keep your child away from? <span class="required">*</span><br><span class="form-note">(Select all that apply)</span></label>
+                    <div class="toggle-group" id="avoidTopicsToggleGroup">
+                        <button type="button" class="toggle-btn" data-value="certain_religions">Certain Religions</button>
+                        <button type="button" class="toggle-btn" data-value="crime">Crime</button>
+                        <button type="button" class="toggle-btn" data-value="dating">Dating/Relationships</button>
+                        <button type="button" class="toggle-btn" data-value="death">Death</button>
+                        <button type="button" class="toggle-btn" data-value="evolution">Evolution</button>
+                        <button type="button" class="toggle-btn" data-value="money">Money/Materialism</button>
+                        <button type="button" class="toggle-btn" data-value="politics">Politics</button>
+                        <button type="button" class="toggle-btn" data-value="war">War</button>
+                    </div>
+                    
+                    <!-- Custom topic to avoid input -->
+                    <div class="custom-value-container" style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="customAvoidTopicInput" placeholder="Enter topic to avoid..." style="flex: 1;">
+                        <button type="button" id="addCustomAvoidTopicBtn" style="margin-top: 0;">Add Topic</button>
+                    </div>
+                    
+                    <input type="hidden" id="selectedAvoidTopics" name="avoid_topics">
+                </div>
+                
+                <div class="form-group">
+                    <label for="searchQueries">Is there any content you would like us to find for you? <span class="required">*</span><br><span class="form-note">(Enter up to 3 search queries that align with your family values. For example: "Farming videos with kids helping their parents," "Christian kids songs," "Science experiments for children")</span></label>
+                    <textarea id="searchQueries" name="searchQueries" rows="4" required></textarea>
+                </div>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <section>
+        <p><a href="index.html">Return Home</a></p>
+    </section>
+
+    <!-- Load configuration with API keys -->
+    <script src="config.js"></script>
+    
+    <!-- Load Supabase JS from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://hrdcefbqiujkaisuiqkc.supabase.co';
+        const supabaseKey = SUPABASE_API_KEY; // Use the key from config.js
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // Toggle button functionality
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateAllSelectedValues();
+            });
+        });
+        
+        // Custom value button functionality
+        document.getElementById('addCustomValueBtn').addEventListener('click', function() {
+            const customValueInput = document.getElementById('customValueInput');
+            const customValue = customValueInput.value.trim();
+            
+            if (customValue === '') {
+                alert('Please enter a value');
+                return;
+            }
+            
+            // Check if this value already exists
+            const existingButtons = document.querySelectorAll('#valuesToggleGroup .toggle-btn');
+            for (let btn of existingButtons) {
+                if (btn.textContent.toLowerCase() === customValue.toLowerCase()) {
+                    alert('This value already exists');
+                    customValueInput.value = '';
+                    return;
+                }
+            }
+            
+            // Create a new button with the custom value
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.className = 'toggle-btn active'; // Make it active by default
+            newButton.dataset.value = customValue.toLowerCase().replace(/\s+/g, '_'); // Convert spaces to underscores
+            newButton.textContent = customValue;
+            
+            // Add the same event listener as other toggle buttons
+            newButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateAllSelectedValues();
+            });
+            
+            // Add the new button to the toggle group
+            document.getElementById('valuesToggleGroup').appendChild(newButton);
+            
+            // Clear the input field
+            customValueInput.value = '';
+            
+            // Update the selected values
+            updateAllSelectedValues();
+        });
+        
+        // Allow pressing Enter in the custom value input to add the value
+        document.getElementById('customValueInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('addCustomValueBtn').click();
+            }
+        });
+        
+        // Custom content to avoid button functionality
+        document.getElementById('addCustomAvoidContentBtn').addEventListener('click', function() {
+            const customContentInput = document.getElementById('customAvoidContentInput');
+            const customContent = customContentInput.value.trim();
+            
+            if (customContent === '') {
+                alert('Please enter content to avoid');
+                return;
+            }
+            
+            // Check if this content already exists
+            const existingButtons = document.querySelectorAll('#avoidContentToggleGroup .toggle-btn');
+            for (let btn of existingButtons) {
+                if (btn.textContent.toLowerCase() === customContent.toLowerCase()) {
+                    alert('This content type already exists');
+                    customContentInput.value = '';
+                    return;
+                }
+            }
+            
+            // Create a new button with the custom content
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.className = 'toggle-btn active'; // Make it active by default
+            newButton.dataset.value = customContent.toLowerCase().replace(/\s+/g, '_'); // Convert spaces to underscores
+            newButton.textContent = customContent;
+            
+            // Add the same event listener as other toggle buttons
+            newButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateAllSelectedValues();
+            });
+            
+            // Add the new button to the toggle group
+            document.getElementById('avoidContentToggleGroup').appendChild(newButton);
+            
+            // Clear the input field
+            customContentInput.value = '';
+            
+            // Update the selected values
+            updateAllSelectedValues();
+        });
+        
+        // Allow pressing Enter in the custom content input to add the content
+        document.getElementById('customAvoidContentInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('addCustomAvoidContentBtn').click();
+            }
+        });
+        
+        // Custom topic to avoid button functionality
+        document.getElementById('addCustomAvoidTopicBtn').addEventListener('click', function() {
+            const customTopicInput = document.getElementById('customAvoidTopicInput');
+            const customTopic = customTopicInput.value.trim();
+            
+            if (customTopic === '') {
+                alert('Please enter a topic to avoid');
+                return;
+            }
+            
+            // Check if this topic already exists
+            const existingButtons = document.querySelectorAll('#avoidTopicsToggleGroup .toggle-btn');
+            for (let btn of existingButtons) {
+                if (btn.textContent.toLowerCase() === customTopic.toLowerCase()) {
+                    alert('This topic already exists');
+                    customTopicInput.value = '';
+                    return;
+                }
+            }
+            
+            // Create a new button with the custom topic
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.className = 'toggle-btn active'; // Make it active by default
+            newButton.dataset.value = customTopic.toLowerCase().replace(/\s+/g, '_'); // Convert spaces to underscores
+            newButton.textContent = customTopic;
+            
+            // Add the same event listener as other toggle buttons
+            newButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateAllSelectedValues();
+            });
+            
+            // Add the new button to the toggle group
+            document.getElementById('avoidTopicsToggleGroup').appendChild(newButton);
+            
+            // Clear the input field
+            customTopicInput.value = '';
+            
+            // Update the selected values
+            updateAllSelectedValues();
+        });
+        
+        // Allow pressing Enter in the custom topic input to add the topic
+        document.getElementById('customAvoidTopicInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('addCustomAvoidTopicBtn').click();
+            }
+        });
+        
+        function updateSelectedValues(groupId, hiddenInputId) {
+            const selectedButtons = document.querySelectorAll(`#${groupId} .toggle-btn.active`);
+            const selectedValues = Array.from(selectedButtons).map(btn => btn.dataset.value);
+            document.getElementById(hiddenInputId).value = selectedValues.join(',');
+        }
+        
+        function updateAllSelectedValues() {
+            updateSelectedValues('valuesToggleGroup', 'selectedValues');
+            updateSelectedValues('avoidContentToggleGroup', 'selectedAvoidContent');
+            updateSelectedValues('avoidTopicsToggleGroup', 'selectedAvoidTopics');
+        }
+        
+        // Initialize form submission handler
+        document.getElementById('familyValuesForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Update all selected values before submission
+            updateAllSelectedValues();
+            
+            // Validate that at least one value is selected in each required group
+            if (document.getElementById('selectedValues').value === '') {
+                alert('Please select at least one value to encourage in your children.');
+                return;
+            }
+            
+            if (document.getElementById('selectedAvoidContent').value === '') {
+                alert('Please select at least one type of content you do not want your child seeing.');
+                return;
+            }
+            
+            if (document.getElementById('selectedAvoidTopics').value === '') {
+                alert('Please select at least one topic you want to keep your child away from.');
+                return;
+            }
+            
+            // Get form data
+            const email = document.getElementById('email').value;
+            const religion = document.getElementById('religion').value;
+            const values = document.getElementById('selectedValues').value;
+            const avoid_content = document.getElementById('selectedAvoidContent').value;
+            const avoid_topics = document.getElementById('selectedAvoidTopics').value;
+            const searchQueries = document.getElementById('searchQueries').value;
+            
+            // Create timestamp
+            const timestamp = new Date().toISOString();
+            
+            // Get the submit button
+            const submitButton = event.submitter || document.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            
+            // Disable the button and change text to show loading
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            
+            // Convert comma-separated values to arrays
+            const valuesArray = values.split(',').filter(Boolean);
+            const avoidContentArray = avoid_content.split(',').filter(Boolean);
+            const avoidTopicsArray = avoid_topics.split(',').filter(Boolean);
+            
+            // Create data object for Supabase using the correct field names from the database schema
+            const supabaseData = {
+                email: email,
+                religion: religion,
+                encourage: valuesArray,
+                content_to_avoid: avoidContentArray,
+                topics_to_avoid: avoidTopicsArray,
+                searches: searchQueries,
+                timestamp: timestamp
+            };
+            
+            // Log the data being sent (for debugging)
+            console.log('Submitting to Supabase:', supabaseData);
+            
+            // Send data to Supabase
+            supabaseClient
+                .from('submissions')
+                .insert([supabaseData])
+                .then(response => {
+                    if (response.error) {
+                        console.error('Supabase error:', response.error);
+                        throw new Error(response.error.message);
+                    }
+                    
+                    console.log('Form submitted successfully:', response.data);
+                    // Redirect to success page instead of showing alert
+                    window.location.href = 'success.html';
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('There was an error submitting your form. Please try again later.');
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html> 
