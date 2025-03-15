@@ -199,6 +199,36 @@
             display: inline;
         }
         
+        /* Toggle Button Styles */
+        .toggle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .toggle-btn {
+            background-color: rgba(10, 25, 41, 0.7);
+            color: #ffffff;
+            border: 1px solid #2a4a6a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn.active {
+            background-color: rgba(192, 170, 118, 0.3);
+            border-color: #c0aa76;
+            color: #c0aa76;
+        }
+        
+        .toggle-btn:hover {
+            border-color: #c0aa76;
+        }
+        
         button {
             background-color: transparent;
             color: #c0aa76;
@@ -343,56 +373,21 @@
                 
                 <div class="form-group">
                     <label>What values would you like to encourage in your children? <span class="required">*</span><br><span class="form-note">(Choose all that apply)</span></label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="honesty" name="values" value="honesty">
-                            <label for="honesty">Honesty</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="respect" name="values" value="respect">
-                            <label for="respect">Respect</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="kindness" name="values" value="kindness">
-                            <label for="kindness">Kindness</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="responsibility" name="values" value="responsibility">
-                            <label for="responsibility">Responsibility</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="perseverance" name="values" value="perseverance">
-                            <label for="perseverance">Perseverance</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="gratitude" name="values" value="gratitude">
-                            <label for="gratitude">Gratitude</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="empathy" name="values" value="empathy">
-                            <label for="empathy">Empathy</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="courage" name="values" value="courage">
-                            <label for="courage">Courage</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="creativity" name="values" value="creativity">
-                            <label for="creativity">Creativity</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="curiosity" name="values" value="curiosity">
-                            <label for="curiosity">Curiosity</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="faith" name="values" value="faith">
-                            <label for="faith">Faith</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="family" name="values" value="family">
-                            <label for="family">Family</label>
-                        </div>
+                    <div class="toggle-group" id="valuesToggleGroup">
+                        <button type="button" class="toggle-btn" data-value="courage">Courage</button>
+                        <button type="button" class="toggle-btn" data-value="creativity">Creativity</button>
+                        <button type="button" class="toggle-btn" data-value="curiosity">Curiosity</button>
+                        <button type="button" class="toggle-btn" data-value="empathy">Empathy</button>
+                        <button type="button" class="toggle-btn" data-value="faith">Faith</button>
+                        <button type="button" class="toggle-btn" data-value="family">Family</button>
+                        <button type="button" class="toggle-btn" data-value="gratitude">Gratitude</button>
+                        <button type="button" class="toggle-btn" data-value="honesty">Honesty</button>
+                        <button type="button" class="toggle-btn" data-value="kindness">Kindness</button>
+                        <button type="button" class="toggle-btn" data-value="perseverance">Perseverance</button>
+                        <button type="button" class="toggle-btn" data-value="respect">Respect</button>
+                        <button type="button" class="toggle-btn" data-value="responsibility">Responsibility</button>
                     </div>
+                    <input type="hidden" id="selectedValues" name="values">
                 </div>
                 
                 <div class="form-group">
@@ -486,8 +481,31 @@
     </section>
 
     <script>
+        // Toggle button functionality
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateSelectedValues();
+            });
+        });
+        
+        function updateSelectedValues() {
+            const selectedButtons = document.querySelectorAll('#valuesToggleGroup .toggle-btn.active');
+            const selectedValues = Array.from(selectedButtons).map(btn => btn.dataset.value);
+            document.getElementById('selectedValues').value = selectedValues.join(',');
+        }
+        
         document.getElementById('familyValuesForm').addEventListener('submit', function(event) {
             event.preventDefault();
+            
+            // Update selected values before submission
+            updateSelectedValues();
+            
+            // Validate that at least one value is selected
+            if (document.getElementById('selectedValues').value === '') {
+                alert('Please select at least one value to encourage in your children.');
+                return;
+            }
             
             // In a real implementation, you would send this data to your server
             // For now, we'll just show a confirmation message
