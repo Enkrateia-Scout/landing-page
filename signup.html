@@ -323,69 +323,157 @@
                     <input type="email" id="email" name="email" required>
                 </div>
                 
-                <h2>Your Family Values</h2>
-                
                 <div class="form-group">
-                    <label for="familyIdentity">How would you describe your family's core identity? <span class="required">*</span></label>
-                    <textarea id="familyIdentity" name="familyIdentity" placeholder="E.g., We are a family that values education, outdoor activities, and creative expression..." required></textarea>
-                    <p class="form-note">This helps us understand the foundation of your family's values and interests.</p>
+                    <label for="religion">What religion do you most closely align with? <span class="required">*</span></label>
+                    <select id="religion" name="religion" required>
+                        <option value="" disabled selected>Select your religion</option>
+                        <option value="christianity">Christianity</option>
+                        <option value="islam">Islam</option>
+                        <option value="judaism">Judaism</option>
+                        <option value="hinduism">Hinduism</option>
+                        <option value="buddhism">Buddhism</option>
+                        <option value="sikhism">Sikhism</option>
+                        <option value="atheism">Atheism</option>
+                        <option value="agnosticism">Agnosticism</option>
+                        <option value="spiritual">Spiritual but not religious</option>
+                        <option value="other">Other</option>
+                        <option value="prefer_not_to_say">Prefer not to say</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">
-                    <label for="coreValues">What values are most important to your family? <span class="required">*</span></label>
-                    <textarea id="coreValues" name="coreValues" placeholder="E.g., Honesty, respect, compassion, perseverance, curiosity..." required></textarea>
-                    <p class="form-note">List the principles and values that guide your family's decisions and interactions.</p>
-                </div>
-                
-                <div class="form-group">
-                    <label for="avoidTopics">Are there any topics or themes you prefer to avoid? <span class="required">*</span></label>
-                    <textarea id="avoidTopics" name="avoidTopics" placeholder="E.g., Excessive violence, certain political topics, specific religious content..."></textarea>
-                    <p class="form-note">This helps us filter out content that doesn't align with your preferences.</p>
-                </div>
-                
-                <div class="form-group">
-                    <label>What content categories interest your family the most?</label>
+                    <label>What values would you like to encourage in your children? <span class="required">*</span><br><span class="form-note">(Choose all that apply)</span></label>
                     <div class="checkbox-group">
                         <div class="checkbox-container">
-                            <input type="checkbox" id="educational" name="categories" value="educational">
-                            <label for="educational">Educational</label>
+                            <input type="checkbox" id="honesty" name="values" value="honesty">
+                            <label for="honesty">Honesty</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="creative" name="categories" value="creative">
-                            <label for="creative">Creative Arts</label>
+                            <input type="checkbox" id="respect" name="values" value="respect">
+                            <label for="respect">Respect</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="outdoor" name="categories" value="outdoor">
-                            <label for="outdoor">Outdoor & Nature</label>
+                            <input type="checkbox" id="kindness" name="values" value="kindness">
+                            <label for="kindness">Kindness</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="science" name="categories" value="science">
-                            <label for="science">Science & Technology</label>
+                            <input type="checkbox" id="responsibility" name="values" value="responsibility">
+                            <label for="responsibility">Responsibility</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="history" name="categories" value="history">
-                            <label for="history">History & Culture</label>
+                            <input type="checkbox" id="perseverance" name="values" value="perseverance">
+                            <label for="perseverance">Perseverance</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="literature" name="categories" value="literature">
-                            <label for="literature">Literature & Stories</label>
+                            <input type="checkbox" id="gratitude" name="values" value="gratitude">
+                            <label for="gratitude">Gratitude</label>
                         </div>
                         <div class="checkbox-container">
-                            <input type="checkbox" id="music" name="categories" value="music">
-                            <label for="music">Music & Performance</label>
+                            <input type="checkbox" id="empathy" name="values" value="empathy">
+                            <label for="empathy">Empathy</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="courage" name="values" value="courage">
+                            <label for="courage">Courage</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="creativity" name="values" value="creativity">
+                            <label for="creativity">Creativity</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="curiosity" name="values" value="curiosity">
+                            <label for="curiosity">Curiosity</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="faith" name="values" value="faith">
+                            <label for="faith">Faith</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="family" name="values" value="family">
+                            <label for="family">Family</label>
                         </div>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="childrenAges">Ages of children in your family (optional)</label>
-                    <input type="text" id="childrenAges" name="childrenAges" placeholder="E.g., 5, 8, 12">
-                    <p class="form-note">This helps us recommend age-appropriate content.</p>
+                    <label>What types of content do you not want your child seeing? <span class="required">*</span><br><span class="form-note">(Select all that apply)</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="violence" name="avoid_content" value="violence">
+                            <label for="violence">Violence</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="profanity" name="avoid_content" value="profanity">
+                            <label for="profanity">Profanity</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="sexual_content" name="avoid_content" value="sexual_content">
+                            <label for="sexual_content">Sexual Content</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="drug_use" name="avoid_content" value="drug_use">
+                            <label for="drug_use">Drug Use</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="alcohol" name="avoid_content" value="alcohol">
+                            <label for="alcohol">Alcohol</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="smoking" name="avoid_content" value="smoking">
+                            <label for="smoking">Smoking</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="frightening" name="avoid_content" value="frightening">
+                            <label for="frightening">Frightening Content</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="gambling" name="avoid_content" value="gambling">
+                            <label for="gambling">Gambling</label>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="additionalInfo">Anything else you'd like us to know?</label>
-                    <textarea id="additionalInfo" name="additionalInfo" placeholder="Any additional information that would help us understand your family better..."></textarea>
+                    <label>What topics do you want to keep your child away from? <span class="required">*</span><br><span class="form-note">(Select all that apply)</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="politics" name="avoid_topics" value="politics">
+                            <label for="politics">Politics</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="war" name="avoid_topics" value="war">
+                            <label for="war">War</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="death" name="avoid_topics" value="death">
+                            <label for="death">Death</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="crime" name="avoid_topics" value="crime">
+                            <label for="crime">Crime</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="money" name="avoid_topics" value="money">
+                            <label for="money">Money/Materialism</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="dating" name="avoid_topics" value="dating">
+                            <label for="dating">Dating/Relationships</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="certain_religions" name="avoid_topics" value="certain_religions">
+                            <label for="certain_religions">Certain Religions</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="evolution" name="avoid_topics" value="evolution">
+                            <label for="evolution">Evolution</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="searchQueries">Is there any content you would like us to find for you? <span class="required">*</span><br><span class="form-note">(Enter up to 3 search queries that align with your family values. For example: "Farming videos with kids helping their parents," "Christian kids songs," "Science experiments for children")</span></label>
+                    <textarea id="searchQueries" name="searchQueries" rows="4" required></textarea>
                 </div>
                 
                 <button type="submit">Submit</button>
