@@ -370,7 +370,6 @@
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
-            <a href="products.html">Products</a>
             <a href="signup.html">Sign Up</a>
         </div>
     </nav>
@@ -423,6 +422,13 @@
                         <button type="button" class="toggle-btn" data-value="respect">Respect</button>
                         <button type="button" class="toggle-btn" data-value="responsibility">Responsibility</button>
                     </div>
+                    
+                    <!-- Custom value input -->
+                    <div class="custom-value-container" style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="customValueInput" placeholder="Enter your own value..." style="flex: 1;">
+                        <button type="button" id="addCustomValueBtn" style="margin-top: 0;">Add Value</button>
+                    </div>
+                    
                     <input type="hidden" id="selectedValues" name="values">
                 </div>
                 
@@ -438,6 +444,13 @@
                         <button type="button" class="toggle-btn" data-value="smoking">Smoking</button>
                         <button type="button" class="toggle-btn" data-value="violence">Violence</button>
                     </div>
+                    
+                    <!-- Custom content to avoid input -->
+                    <div class="custom-value-container" style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="customAvoidContentInput" placeholder="Enter content to avoid..." style="flex: 1;">
+                        <button type="button" id="addCustomAvoidContentBtn" style="margin-top: 0;">Add Content</button>
+                    </div>
+                    
                     <input type="hidden" id="selectedAvoidContent" name="avoid_content">
                 </div>
                 
@@ -453,6 +466,13 @@
                         <button type="button" class="toggle-btn" data-value="politics">Politics</button>
                         <button type="button" class="toggle-btn" data-value="war">War</button>
                     </div>
+                    
+                    <!-- Custom topic to avoid input -->
+                    <div class="custom-value-container" style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="customAvoidTopicInput" placeholder="Enter topic to avoid..." style="flex: 1;">
+                        <button type="button" id="addCustomAvoidTopicBtn" style="margin-top: 0;">Add Topic</button>
+                    </div>
+                    
                     <input type="hidden" id="selectedAvoidTopics" name="avoid_topics">
                 </div>
                 
@@ -488,6 +508,159 @@
                 this.classList.toggle('active');
                 updateAllSelectedValues();
             });
+        });
+        
+        // Custom value button functionality
+        document.getElementById('addCustomValueBtn').addEventListener('click', function() {
+            const customValueInput = document.getElementById('customValueInput');
+            const customValue = customValueInput.value.trim();
+            
+            if (customValue === '') {
+                alert('Please enter a value');
+                return;
+            }
+            
+            // Check if this value already exists
+            const existingButtons = document.querySelectorAll('#valuesToggleGroup .toggle-btn');
+            for (let btn of existingButtons) {
+                if (btn.textContent.toLowerCase() === customValue.toLowerCase()) {
+                    alert('This value already exists');
+                    customValueInput.value = '';
+                    return;
+                }
+            }
+            
+            // Create a new button with the custom value
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.className = 'toggle-btn active'; // Make it active by default
+            newButton.dataset.value = customValue.toLowerCase().replace(/\s+/g, '_'); // Convert spaces to underscores
+            newButton.textContent = customValue;
+            
+            // Add the same event listener as other toggle buttons
+            newButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateAllSelectedValues();
+            });
+            
+            // Add the new button to the toggle group
+            document.getElementById('valuesToggleGroup').appendChild(newButton);
+            
+            // Clear the input field
+            customValueInput.value = '';
+            
+            // Update the selected values
+            updateAllSelectedValues();
+        });
+        
+        // Allow pressing Enter in the custom value input to add the value
+        document.getElementById('customValueInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('addCustomValueBtn').click();
+            }
+        });
+        
+        // Custom content to avoid button functionality
+        document.getElementById('addCustomAvoidContentBtn').addEventListener('click', function() {
+            const customContentInput = document.getElementById('customAvoidContentInput');
+            const customContent = customContentInput.value.trim();
+            
+            if (customContent === '') {
+                alert('Please enter content to avoid');
+                return;
+            }
+            
+            // Check if this content already exists
+            const existingButtons = document.querySelectorAll('#avoidContentToggleGroup .toggle-btn');
+            for (let btn of existingButtons) {
+                if (btn.textContent.toLowerCase() === customContent.toLowerCase()) {
+                    alert('This content type already exists');
+                    customContentInput.value = '';
+                    return;
+                }
+            }
+            
+            // Create a new button with the custom content
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.className = 'toggle-btn active'; // Make it active by default
+            newButton.dataset.value = customContent.toLowerCase().replace(/\s+/g, '_'); // Convert spaces to underscores
+            newButton.textContent = customContent;
+            
+            // Add the same event listener as other toggle buttons
+            newButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateAllSelectedValues();
+            });
+            
+            // Add the new button to the toggle group
+            document.getElementById('avoidContentToggleGroup').appendChild(newButton);
+            
+            // Clear the input field
+            customContentInput.value = '';
+            
+            // Update the selected values
+            updateAllSelectedValues();
+        });
+        
+        // Allow pressing Enter in the custom content input to add the content
+        document.getElementById('customAvoidContentInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('addCustomAvoidContentBtn').click();
+            }
+        });
+        
+        // Custom topic to avoid button functionality
+        document.getElementById('addCustomAvoidTopicBtn').addEventListener('click', function() {
+            const customTopicInput = document.getElementById('customAvoidTopicInput');
+            const customTopic = customTopicInput.value.trim();
+            
+            if (customTopic === '') {
+                alert('Please enter a topic to avoid');
+                return;
+            }
+            
+            // Check if this topic already exists
+            const existingButtons = document.querySelectorAll('#avoidTopicsToggleGroup .toggle-btn');
+            for (let btn of existingButtons) {
+                if (btn.textContent.toLowerCase() === customTopic.toLowerCase()) {
+                    alert('This topic already exists');
+                    customTopicInput.value = '';
+                    return;
+                }
+            }
+            
+            // Create a new button with the custom topic
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.className = 'toggle-btn active'; // Make it active by default
+            newButton.dataset.value = customTopic.toLowerCase().replace(/\s+/g, '_'); // Convert spaces to underscores
+            newButton.textContent = customTopic;
+            
+            // Add the same event listener as other toggle buttons
+            newButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                updateAllSelectedValues();
+            });
+            
+            // Add the new button to the toggle group
+            document.getElementById('avoidTopicsToggleGroup').appendChild(newButton);
+            
+            // Clear the input field
+            customTopicInput.value = '';
+            
+            // Update the selected values
+            updateAllSelectedValues();
+        });
+        
+        // Allow pressing Enter in the custom topic input to add the topic
+        document.getElementById('customAvoidTopicInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('addCustomAvoidTopicBtn').click();
+            }
         });
         
         function updateSelectedValues(groupId, hiddenInputId) {
@@ -574,20 +747,8 @@
                     }
                     
                     console.log('Form submitted successfully:', response.data);
-                    alert('Thank you for sharing your family values! We will use this information to provide personalized content recommendations.');
-                    
-                    // Reset form
-                    document.getElementById('familyValuesForm').reset();
-                    
-                    // Reset toggle buttons
-                    document.querySelectorAll('.toggle-btn.active').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    
-                    // Reset hidden inputs
-                    document.getElementById('selectedValues').value = '';
-                    document.getElementById('selectedAvoidContent').value = '';
-                    document.getElementById('selectedAvoidTopics').value = '';
+                    // Redirect to success page instead of showing alert
+                    window.location.href = 'success.html';
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
